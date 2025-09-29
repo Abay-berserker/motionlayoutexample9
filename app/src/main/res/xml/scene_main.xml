@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Start State - Collapsed -->
+    <ConstraintSet android:id="@+id/start">
+        <!-- Header Card - Large at top -->
+        <Constraint android:id="@id/headerCard"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <!-- Content Card - Below header -->
+        <Constraint android:id="@id/contentCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/headerCard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <!-- ImageView in header - Centered -->
+        <Constraint android:id="@id/imageView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintTop_toTopOf="@id/headerCard"
+            app:layout_constraintBottom_toBottomOf="@id/headerCard"
+            app:layout_constraintStart_toStartOf="@id/headerCard"
+            app:layout_constraintEnd_toEndOf="@id/headerCard" />
+
+        <!-- Title text in header -->
+        <Constraint android:id="@id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/headerCard"
+            app:layout_constraintStart_toStartOf="@id/headerCard"
+            app:layout_constraintEnd_toEndOf="@id/headerCard"
+            android:layout_marginBottom="16dp" />
+
+    </ConstraintSet>
+
+    <!-- End State - Expanded -->
+    <ConstraintSet android:id="@+id/end">
+        <!-- Header Card - Smaller and at top -->
+        <Constraint android:id="@id/headerCard"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <!-- Content Card - Takes more space -->
+        <Constraint android:id="@id/contentCard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/headerCard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp" />
+
+        <!-- ImageView - Moved to left in header -->
+        <Constraint android:id="@id/imageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintStart_toStartOf="@id/headerCard"
+            app:layout_constraintTop_toTopOf="@id/headerCard"
+            app:layout_constraintBottom_toBottomOf="@id/headerCard"
+            android:layout_marginStart="16dp" />
+
+        <!-- Title text - Moved to right in header -->
+        <Constraint android:id="@id/titleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imageView"
+            app:layout_constraintEnd_toEndOf="@id/headerCard"
+            app:layout_constraintTop_toTopOf="@id/headerCard"
+            app:layout_constraintBottom_toBottomOf="@id/headerCard"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_vertical" />
+
+    </ConstraintSet>
+
+    <!-- Transition with swipe and click support -->
+    <Transition
+        app:constraintSetStart="@id/start"
+        app:constraintSetEnd="@id/end"
+        app:duration="800">
+
+        <!-- Swipe trigger -->
+        <OnSwipe
+            app:touchAnchorId="@id/headerCard"
+            app:touchAnchorSide="top"
+            app:dragDirection="dragUp" />
+
+        <!-- KeyFrame for smooth animation -->
+        <KeyFrameSet>
+            <!-- Custom attributes for scale animation -->
+            <KeyAttribute
+                app:motionTarget="@id/imageView"
+                app:framePosition="50">
+                <CustomAttribute
+                    app:attributeName="scaleX"
+                    app:customFloatValue="1.2" />
+                <CustomAttribute
+                    app:attributeName="scaleY"
+                    app:customFloatValue="1.2" />
+            </KeyAttribute>
+
+            <!-- Color change animation for header -->
+            <KeyAttribute
+                app:motionTarget="@id/headerCard"
+                app:framePosition="50">
+                <CustomAttribute
+                    app:attributeName="cardBackgroundColor"
+                    app:customColorValue="@color/purple_700" />
+            </KeyAttribute>
+        </KeyFrameSet>
+
+    </Transition>
+
+</MotionScene>
